@@ -6,9 +6,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/gluegen-rt-natives-windows-amd64.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/mysql-connector-java-5.1.49.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files (x86)/git/TerrainOnline/TerrainOnline/lib/h2-1.4.200.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
