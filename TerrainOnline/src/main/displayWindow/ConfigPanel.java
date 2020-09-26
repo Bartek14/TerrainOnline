@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import main.parameters.Params;
+
 public class ConfigPanel extends JPanel {
 	
 	static JTextField lengthTextField;
@@ -23,6 +25,7 @@ public class ConfigPanel extends JPanel {
     static JTextField roughnessTextField;
     static JTextField seedTextField;
     static JTextField relativnessTextField;
+    
     JButton generateButton;
     
 	JLabel lengthLabel;

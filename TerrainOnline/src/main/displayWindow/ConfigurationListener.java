@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import javax.swing.JFileChooser;
 
 import main.databaseManagement.DatabaseEntity;
+import main.mesh.MeshPanel;
+import main.parameters.Params;
 
 public class ConfigurationListener implements ActionListener {
 
@@ -151,7 +153,7 @@ public class ConfigurationListener implements ActionListener {
 		}
 		case "DB_LOAD":{
 			
-try {
+			try {
 				
 				DatabaseEntity.loadCoordsAndSpecs();
 			} catch (SQLException e1) {
@@ -164,11 +166,13 @@ try {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Choose file");
 			int result = chooser.showDialog(null, "Choose");
+			
 			if(JFileChooser.APPROVE_OPTION == result) {
 				System.out.println("File chosen: " + chooser.getSelectedFile().toPath());
 				FileWriter writer = null;
 				BufferedWriter bufferedWriter = null;
 				String lengthString = confPanel.lengthTextField().getText();
+				
 				try {
 					writer = new FileWriter(chooser.getSelectedFile());
 					bufferedWriter = new BufferedWriter(writer);
@@ -184,6 +188,7 @@ try {
 					System.out.println("Intercepted exception: " + ex.getClass().getName());
 					ex.printStackTrace();
 				}
+				
 			String widthString = confPanel.widthTextField().getText();
 				try {
 					  bufferedWriter.write(widthString);
@@ -266,9 +271,9 @@ try {
 					
 					for (int x = 0; x<Params.getWidth()-1; x++) {
 						for (int y = 0; y<Params.getLength()-1; y++) {
-						String str = Float.toString(MeshPanel.height[x][y]);
-						bufferedWriter.write(str);
-						bufferedWriter.newLine();
+							String str = Float.toString(MeshPanel.height[x][y]);
+							bufferedWriter.write(str);
+							bufferedWriter.newLine();
 						}
 					}
 				} catch (IOException e1) {
@@ -290,10 +295,12 @@ try {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Choose file");
 			int result = chooser.showDialog(null, "Choose");
+			
 			if(JFileChooser.APPROVE_OPTION == result) {
 				System.out.println("File chosen: " + chooser.getSelectedFile());
 				FileReader reader = null;
 				BufferedReader bufferedReader = null;
+				
 				try 
 				{
 					reader = new FileReader(chooser.getSelectedFile());

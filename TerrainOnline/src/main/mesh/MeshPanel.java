@@ -1,4 +1,4 @@
-package main.displayWindow;
+package main.mesh;
 
 import java.awt.DisplayMode;
 import java.util.Random;
@@ -7,6 +7,9 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.glu.GLU;
+
+import main.displayWindow.ConfigPanel;
+import main.parameters.Params;
 
 
 public class MeshPanel extends GLJPanel implements GLEventListener {
@@ -29,8 +32,7 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 
 	      final GL2 gl = drawable.getGL().getGL2();
 	      
-		   	if(ConfigPanel.getGenerating())
-		   	{
+		   	if(ConfigPanel.getGenerating()) {
 		   		gl.glFlush();
 		   		meshInit();
 		   		ConfigPanel.setGenerating(false);
@@ -40,17 +42,14 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 	      gl.glEnable(GL2.GL_CULL_FACE);
 	      gl.glCullFace(GL2.GL_BACK);
 	      gl.glFrontFace(GL2.GL_CCW); 
-	     
 	      gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
-	      
 	      gl.glClear (GL2.GL_COLOR_BUFFER_BIT |  GL2.GL_DEPTH_BUFFER_BIT );
-	     gl.glMatrixMode(GL2.GL_MODELVIEW);
+	      gl.glMatrixMode(GL2.GL_MODELVIEW);
 	      gl.glLoadIdentity();
 	      gl.glTranslatef( 20f, 190f, -320.5f );
 	   
-	     gl.glRotatef( rquad, 0.0f, 1.0f, 1.0f );
-	     gl.glRotatef( -45, 1.0f, 0.0f, 0.0f );
-
+	      gl.glRotatef( rquad, 0.0f, 1.0f, 1.0f );
+	      gl.glRotatef( -45, 1.0f, 0.0f, 0.0f );
 	      gl.glTranslatef( -(Params.getWidth()*scale/2f), (Params.getLength()*scale/2f), -320.5f );
 	      
 	      for(int y=0; y>-Params.getLength()+1; y--){ 
@@ -92,7 +91,6 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
    @Override
    public void reshape( GLAutoDrawable drawable, int x, int y, int width, int height ) {
 	 
-	   
 	   GL2 gl = drawable.getGL().getGL2();
 	      
 	      if( height <= 0 )
@@ -103,7 +101,6 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 	      gl.glMatrixMode( GL2.GL_PROJECTION );
 	      gl.glLoadIdentity();
 	  
-			
 	      glu.gluPerspective( 95.0f, h, 1.0, 5000.0 );
 	      gl.glMatrixMode( GL2.GL_MODELVIEW );
 	      gl.glLoadIdentity();
@@ -136,7 +133,6 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 	   float upRight = randomHeight(((int) x)+1, ((int) y)+1);
 	   float downRight = randomHeight(((int) x)+1, ((int) y));
 	   
-	   
 	   float bottomInterpolation = cosineFading(downLeft, downRight,  x-((int) x));
 	   float topInterpolation = cosineFading(upLeft, upRight,  x-((int) x));
 	   
@@ -165,26 +161,20 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 			   
 	   return height;
 	   }
+   
    private float randomValue(int x, int y) {
-	   
 	   heightRandom.setSeed(x*12345+y*4321+Params.getSeed()*54321);
 	   return heightRandom.nextFloat()*2-1;
+	   
     }
    private float cosineFading(float startInterpolation, float endInterpolation, float factor ) {
-	   
 	   factor = (float)(1f-Math.cos(factor*Math.PI))/2f;
 	   return startInterpolation*(1f-factor) +endInterpolation * factor;
 	   
-	   
    }
    private float linearFading(float startInterpolation, float endInterpolation, float factor ) {
-	  
 	   return startInterpolation*(1f-factor) +endInterpolation * factor;
 	   
    }
-   
-	
-  
-
 
 }

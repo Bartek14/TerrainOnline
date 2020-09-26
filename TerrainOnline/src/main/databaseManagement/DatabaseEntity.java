@@ -7,30 +7,23 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import main.displayWindow.MeshPanel;
-import main.displayWindow.Params;
+import main.mesh.MeshPanel;
+import main.parameters.Params;
 
 public class DatabaseEntity {
 	static Connection conn = null;
 	static Statement saveStatement = null;
-	
 	static Connection loadConn = null;
 	static Statement loadStatement = null;
 	static ResultSet resultSet = null;
 	static ResultSetMetaData metaData = null;
+	
  private static void establishConnection() throws SQLException {
 		
-		
 		try {
-			
 			conn = DriverManager.getConnection("jdbc:h2:~/terrain", "sa","");
-			
-			
 			     saveStatement = conn.createStatement();
-			   
 			     conn.createStatement().executeUpdate("DROP TABLE IF EXISTS `terrainCoords`;");
-					
-				 
 			     conn.createStatement().executeUpdate("CREATE TABLE `terrainCoords` ("+
 							  "`Id` int(6) unsigned NOT NULL auto_increment,"+
 							  "`x` int default NULL,"+
@@ -45,10 +38,7 @@ public class DatabaseEntity {
  				e.printStackTrace();
  			}	
 		try {
-			   
 			conn.createStatement().executeUpdate("DROP TABLE IF EXISTS `terrainSpecs`;");
-					
-				 
 			conn.createStatement().executeUpdate("CREATE TABLE `terrainSpecs` ("+
 							 // "`Id` int(6) unsigned NOT NULL auto_increment,"+
 							  "`length` int default NULL,"+
@@ -69,9 +59,9 @@ public class DatabaseEntity {
 		
 	}
  public static void saveCoordsAndSpecs() throws SQLException {
-	 
 	 try {
 		establishConnection();
+		
 		for (int x = 0; x<Params.getWidth()-1; x++) {
 			for (int y = 0; y<Params.getLength()-1; y++) {
 				conn.createStatement().executeUpdate(DatabaseEntity.insertQueryToTerrainCoords(x,y,MeshPanel.height[x][y])); 
@@ -113,18 +103,18 @@ public class DatabaseEntity {
 	 metaData = resultSet.getMetaData();
 	 //resultSet.next();//dump the ID
 	 
-	 if(resultSet.next()){
+	if(resultSet.next()){
 	 	Params.setLength(resultSet.getInt("length"));
-	 }
-	 if(resultSet.next()){
+	}
+	if(resultSet.next()){
 	 	Params.setWidth(resultSet.getInt("width"));
-	 }
-	 if(resultSet.next()){
+	}
+	if(resultSet.next()){
 	 	Params.setMaxHeight(resultSet.getFloat("max_height"));
-	 }
-	 if(resultSet.next()){
+	}
+	if(resultSet.next()){
 	 	Params.setMinHeight(resultSet.getFloat("minHeight"));
-	 }
+	}
 	if(resultSet.next()){
 	 	Params.setRoughness(resultSet.getFloat("roughness"));
 	}
@@ -147,8 +137,6 @@ public class DatabaseEntity {
 					resultSet.getFloat("height");
 				 
 	 }
-	 
-	 
 	 
  }
 
