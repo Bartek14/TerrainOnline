@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import main.mesh.MeshGenerator;
 import main.mesh.MeshPanel;
 import main.parameters.Params;
 
@@ -64,7 +65,7 @@ public class DatabaseEntity {
 		
 		for (int x = 0; x<Params.getWidth()-1; x++) {
 			for (int y = 0; y<Params.getLength()-1; y++) {
-				conn.createStatement().executeUpdate(DatabaseEntity.insertQueryToTerrainCoords(x,y,MeshPanel.height[x][y])); 
+				conn.createStatement().executeUpdate(DatabaseEntity.insertQueryToTerrainCoords(x,y,MeshGenerator.height[x][y])); 
 			}
 		}
 		conn.createStatement().executeUpdate(DatabaseEntity.insertQueryToTerrainSpecs());
@@ -77,7 +78,7 @@ public class DatabaseEntity {
   
  private static String insertQueryToTerrainCoords(int x, int y, float height ) {
 	 String query="";
-	 query="INSERT INTO `terrainCoords`(`x`,`y`,`height`) VALUES (" +x+","+y+","+MeshPanel.height[x][y]+");";
+	 query="INSERT INTO `terrainCoords`(`x`,`y`,`height`) VALUES (" +x+","+y+","+MeshGenerator.height[x][y]+");";
 	 return query;
  }
  private static String insertQueryToTerrainSpecs() {
@@ -130,10 +131,10 @@ public class DatabaseEntity {
 	 resultSet=coordsStatement.getResultSet();
 	 metaData = resultSet.getMetaData();
 	 
-	 MeshPanel.height = new float[Params.getLength()][Params.getWidth()];
+	 MeshGenerator.height = new float[Params.getLength()][Params.getWidth()];
 	 
 	 while(resultSet.next()) {
-			MeshPanel.height[resultSet.getInt("x")][resultSet.getInt("y")]=
+			MeshGenerator.height[resultSet.getInt("x")][resultSet.getInt("y")]=
 					resultSet.getFloat("height");
 				 
 	 }

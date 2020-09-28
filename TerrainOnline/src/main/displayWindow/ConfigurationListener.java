@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JFileChooser;
 
 import main.databaseManagement.DatabaseEntity;
+import main.mesh.MeshGenerator;
 import main.mesh.MeshPanel;
 import main.parameters.Params;
 
@@ -271,7 +272,7 @@ public class ConfigurationListener implements ActionListener {
 					
 					for (int x = 0; x<Params.getWidth()-1; x++) {
 						for (int y = 0; y<Params.getLength()-1; y++) {
-							String str = Float.toString(MeshPanel.height[x][y]);
+							String str = Float.toString(MeshGenerator.height[x][y]);
 							bufferedWriter.write(str);
 							bufferedWriter.newLine();
 						}
@@ -374,11 +375,11 @@ public class ConfigurationListener implements ActionListener {
 					ex.printStackTrace();
 				}
 				try {
-					MeshPanel.height= new float[Params.getWidth()][Params.getLength()];
+					MeshGenerator.height= new float[Params.getWidth()][Params.getLength()];
 					for (int x = 0; x<Params.getWidth()-1; x++) {
 						for (int y = 0; y<Params.getLength()-1; y++) {
 							 String str = bufferedReader.readLine();
-							MeshPanel.height[x][y] = Float.parseFloat(str);
+							MeshGenerator.height[x][y] = Float.parseFloat(str);
 						}
 					}
 				} catch (IOException e1) {
