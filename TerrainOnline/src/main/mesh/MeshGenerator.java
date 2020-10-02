@@ -9,10 +9,29 @@ import main.parameters.Params;
 
 public class MeshGenerator {
 	public static float[][] height;	
-	static Random heightRandom = new Random();
+	private static Random heightRandom = new Random();
+	private static final int scale =15;
+	private static float rotationStep=0f;
 	
 	 public MeshGenerator() {}
 	 
+	 public static void meshReinitialization(GL2 gl) {
+			if(ConfigPanel.getGenerating()) {
+		   		gl.glFlush();
+		   		meshInitialization();
+		   		ConfigPanel.setGenerating(false);
+		   	}	
+		}
+		
+	public static void meshInitialization() {
+			 height= new float[Params.getWidth()][Params.getLength()];
+			for (int x = 0; x < Params.getWidth(); x++) {
+				for (int y = 0; y < Params.getLength(); y++) {
+					height[x][y]=finalHeight(x/Params.getSmoothness(), y/Params.getSmoothness());
+				}
+			}
+	   }
+		
 	 public static void openGLSetUp(GL2 gl) {
 		 gl.glEnable(GL2.GL_CULL_FACE);
 	      gl.glCullFace(GL2.GL_BACK);
@@ -22,24 +41,27 @@ public class MeshGenerator {
 	      gl.glMatrixMode(GL2.GL_MODELVIEW);
 	      gl.glLoadIdentity();
 	 }
-	 
-	public static void meshReinitialization(GL2 gl) {
-		if(ConfigPanel.getGenerating()) {
-	   		gl.glFlush();
-	   		meshInitialization();
-	   		ConfigPanel.setGenerating(false);
-	   	}	
-	}
+	 public static void generateMesh(GL2 gl) {
+	      for(int y=0; y>-Params.getLength()+1; y--){ 
+	    	  
+	    	  gl.glBegin( GL2.GL_TRIANGLE_STRIP);
+				for (int x = 0; x < Params.getWidth(); x++) {
+					gl.glVertex3f(x*scale, y*scale, MeshGenerator.height[x][-y]);
+					gl.glVertex3f(x*scale, (y-1)*scale,MeshGenerator.height[x][-y+1]);
+				}
+				gl.glEnd();
+				gl.glFlush();
+	      }
+	 }
+	 public static void rotateAndTransformMesh(GL2 gl) {
+		 
+		 gl.glRotatef( rotationStep, 0.0f, 1.0f, 1.0f );
+	      gl.glRotatef( -45, 1.0f, 0.0f, 0.0f );
+	      gl.glTranslatef( 20f, 190f, -320.5f );
+	      gl.glTranslatef( -(Params.getWidth()*scale/2f), (Params.getLength()*scale/2f), -320.5f );
+	      rotationStep+=0.5f;
+	 }
 	
-	public static void meshInitialization() {
-
-		 height= new float[Params.getWidth()][Params.getLength()];
-		for (int x = 0; x < Params.getWidth(); x++) {
-			for (int y = 0; y < Params.getLength(); y++) {
-				height[x][y]=finalHeight(x/Params.getSmoothness(), y/Params.getSmoothness());
-			}
-		}
-   }
 	 private static float finalHeight(float x, float y) {
 		   float height=0;
 		   
@@ -53,10 +75,10 @@ public class MeshGenerator {
 	   }
 	 private static float interpolatedHeight(float x, float y) {
 
-		   float downLeft = randomHeight(((int) x), ((int) y));
-		   float upLeft = randomHeight(((int) x), ((int) y)+1);
+		   float downLeft = randomHeight((int) x, (int) y);
+		   float upLeft = randomHeight((int) x, ((int) y)+1);
 		   float upRight = randomHeight(((int) x)+1, ((int) y)+1);
-		   float downRight = randomHeight(((int) x)+1, ((int) y));
+		   float downRight = randomHeight(((int) x)+1, (int) y);
 		   
 		   float bottomInterpolation = cosineFading(downLeft, downRight,  x-((int) x));
 		   float topInterpolation = cosineFading(upLeft, upRight,  x-((int) x));

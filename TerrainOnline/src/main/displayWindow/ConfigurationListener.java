@@ -40,7 +40,8 @@ public class ConfigurationListener implements ActionListener {
 			
 			 String lengthString = confPanel.lengthTextField().getText(); 
 			  try {
-			  Params.setLength(Math.abs(Integer.parseInt(lengthString)));
+				  if(Integer.parseInt(lengthString)!=Params.getLength())
+			  Params.setLength(Math.abs(Integer.parseInt(lengthString))+1);
 			  } 
 			  catch (NumberFormatException ex) {
 				  System.out.println("Intercepted exception: " + ex.getClass().getName());
@@ -53,7 +54,8 @@ public class ConfigurationListener implements ActionListener {
 			  
 				String widthString = confPanel.widthTextField().getText();
 				try {
-					 Params.setWidth(Math.abs(Integer.parseInt(widthString)));
+					if(Integer.parseInt(widthString)!=Params.getWidth())
+					 Params.setWidth(Math.abs(Integer.parseInt(widthString))+1);
 				}
 				catch (NumberFormatException ex) {
 					System.out.println("Intercepted exception: " + ex.getClass().getName());
