@@ -40,7 +40,15 @@ public class Params {
 		   Params.width = 500;
 		   
 	   }
-	   
+	public static void reset() {
+		Params.setLength(0);
+		  Params.setWidth(0);
+		  Params.setMaxHeight(0);
+		  Params.setMinHeight(0);
+		  Params.setRoughness(0);
+		  Params.setSeed(0);
+		  Params.setRelativness(0);
+	}
 	public static long getSeed() {
 		return seed;
 	}
