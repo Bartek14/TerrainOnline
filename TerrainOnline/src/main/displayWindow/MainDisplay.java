@@ -1,6 +1,8 @@
 package main.displayWindow;
 
 import java.awt.BorderLayout;
+
+
 import javax.swing.JFrame;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
@@ -9,7 +11,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import main.mesh.MeshPanel;
 import main.parameters.Params;
-//Bartosz Ruszczak
+import mouseInput.MouseInput;
+
 public class MainDisplay extends JFrame {
 	
 	final public static int HEIGHT = 700;
@@ -39,11 +42,13 @@ public class MainDisplay extends JFrame {
 		      frame.setVisible(true);
 
 		      MeshPanel mesh = new MeshPanel();
+		      MouseInput mouse = new MouseInput();
 		      glcanvas.addGLEventListener(mesh);
+		      glcanvas.addMouseWheelListener(mouse);
+		      glcanvas.addMouseListener(mouse);
 		      
-		      FPSAnimatorThread FPSAnimator = new FPSAnimatorThread(glcanvas,300);
+		      FPSAnimator FPSAnimator = new FPSAnimator(glcanvas,30);
 		      FPSAnimator.start();
-		      //animator.start();
 		   }
 		   
 

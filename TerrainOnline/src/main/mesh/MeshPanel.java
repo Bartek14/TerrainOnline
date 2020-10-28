@@ -15,11 +15,11 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 
    public static DisplayMode dm, dm_old;
    private GLU glu = new GLU();
-
+   
    
 
 	public MeshPanel() {
-		MeshGenerator.meshInitialization();
+		
 	}
       
    @Override
@@ -28,7 +28,7 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
 	     final GL2 gl = drawable.getGL().getGL2();
 	     MeshGenerator.meshReinitialization(gl);
 	     MeshGenerator.openGLSetUp(gl);
-	     MeshGenerator.rotateAndTransformMesh(gl);
+	     MeshGenerator.rotateAndTranslateMesh(gl);
 	     MeshGenerator.generateMesh(gl);
 	      
 	      
@@ -41,7 +41,10 @@ public class MeshPanel extends GLJPanel implements GLEventListener {
    
    @Override
    public void init( GLAutoDrawable drawable ) {
-	
+	   final GL2 gl = drawable.getGL().getGL2();
+	   MeshGenerator.meshInitialization();
+	   MeshGenerator.rotateAndTranslateMesh(gl);
+	   
    }
       
    @Override

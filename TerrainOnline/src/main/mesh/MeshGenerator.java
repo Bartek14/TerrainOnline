@@ -6,12 +6,14 @@ import com.jogamp.opengl.GL2;
 
 import main.displayWindow.ConfigPanel;
 import main.parameters.Params;
+import mouseInput.MouseInput;
 
 public class MeshGenerator {
 	public static float[][] height;	
 	private static Random heightRandom = new Random();
 	private static final int scale =15;
 	private static float rotationStep=0f;
+	private static float cameraDistance=-320f;
 	
 	 public MeshGenerator() {}
 	 
@@ -53,13 +55,14 @@ public class MeshGenerator {
 				gl.glFlush();
 	      }
 	 }
-	 public static void rotateAndTransformMesh(GL2 gl) {
+	 public static void rotateAndTranslateMesh(GL2 gl) {
 		 
-		 gl.glRotatef( rotationStep, 0.0f, 1.0f, 1.0f );
+		  gl.glRotatef( rotationStep, 0.0f, 1.0f, 1.0f );
 	      gl.glRotatef( -45, 1.0f, 0.0f, 0.0f );
-	      gl.glTranslatef( 20f, 190f, -320.5f );
-	      gl.glTranslatef( -(Params.getWidth()*scale/2f), (Params.getLength()*scale/2f), -320.5f );
+	      gl.glTranslatef( 20f, 190f, MouseInput.cameraDistance);
+	      gl.glTranslatef( -(Params.getWidth()*scale/2f)-MouseInput.horizontalCameraDrag, (Params.getLength()*scale/2f), -320.5f );
 	      rotationStep+=0.5f;
+	      
 	 }
 	
 	 private static float finalHeight(float x, float y) {
